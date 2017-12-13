@@ -1,0 +1,15 @@
+mqtt:
+  image: eclipse-mosquitto:latest
+  ports:
+    - 1883:1883
+
+homeassistant:
+  image: homeassistant/home-assistant:0.59.2
+  ports:
+    - 8123:8123
+  volumes:
+    - ./test:/config
+    - ./temp:/tmp
+    - ./platform:/config/custom_components/
+  links:
+    - mqtt
