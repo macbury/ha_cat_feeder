@@ -4,3 +4,5 @@ homeassistant/test/**/*
 __pycache__/**
 .DS_Store
 homeassistant/temp/**/*
+esp8266/credentials.c
+.DS_Store
