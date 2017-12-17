@@ -6,9 +6,12 @@ homeassistant:
   unit_system: metric
   time_zone: Europe/Warsaw
 
-updater:
-
 frontend:
+  javascript_version: latest
+  extra_html_url:
+    - /local/custom_ui/cat-feeder-today-portions.html
+    - /local/custom_ui/cat-feeder-left-portions.html
+updater:
 
 logbook:
 

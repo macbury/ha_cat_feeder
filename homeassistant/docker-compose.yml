@@ -11,5 +11,6 @@ homeassistant:
     - ./test:/config
     - ./temp:/tmp
     - ./platform:/config/custom_components/
+    - ./www:/config/www/
   links:
     - mqtt

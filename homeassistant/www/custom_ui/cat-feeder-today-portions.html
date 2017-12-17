@@ -1,0 +1,78 @@
+<dom-module id="cat-feeder-today-portions">
+  <template>
+    <style is="custom-style" include="iron-flex iron-flex-alignment"></style>
+    <style>
+      paper-button {
+        color: var(--primary-color);
+        font-weight: 500;
+        top: 3px;
+        height: 37px;
+        margin-right: -.57em;
+        float: right;
+      }
+
+      state-badge {
+        float: left;
+      }
+
+      .info {
+        margin-left: 56px;
+      }
+
+       .name {
+        @apply(--paper-font-common-nowrap);
+        color: var(--primary-text-color);
+        line-height: 40px;
+      }
+
+      .portions, ::slotted(*) {
+        @apply(--paper-font-common-nowrap);
+        color: var(--secondary-text-color);
+        margin-top: -9px;
+      }
+    </style>
+
+    <div>
+      <state-badge state-obj='[[stateObj]]'></state-badge>
+      <paper-button on-tap='feedTheCat'>FEED</paper-button>
+      <div class='info'>
+        <div class='name' in-dialog$='[[inDialog]]'>[[computeStateName(stateObj)]]</div>
+
+        <div class='portions'>
+          [[stateObj.state]] of [[stateObj.attributes.daily_portions]] [[stateObj.attributes.unit_of_measurement]]
+        </div>
+      </div>
+    </div>
+  </template>
+</dom-module>
+
+<script type="text/javascript">
+class CatFeederTodayPortions extends Polymer.Element {
+  static get is() { return 'cat-feeder-today-portions'; }
+  static get properties() {
+    return {
+      hass: Object,
+      stateObj: Object,
+      inDialog: {
+        type: Boolean,
+        value: false,
+      },
+    };
+  }
+  feedTheCat(ev) {
+    ev.stopPropagation();
+    this.hass.callService(
+      'cat_feeder', 'feed',
+      { entity_id: this.stateObj.entity_id }
+    );
+  }
+
+  computeStateName(stateObj) {
+    return window.hassUtil.computeStateName(stateObj);
+  }
+}
+
+(function (customElements) {
+  customElements.define(CatFeederTodayPortions.is, CatFeederTodayPortions);
+})(customElements);
+</script>
